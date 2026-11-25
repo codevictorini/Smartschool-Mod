@@ -1,0 +1,16 @@
+/* ═══════════════════════════════════════════════════════════
+   Smartschool Mod – globale stijlen
+   Kleurthema's worden via JS geïnjecteerd (smod-colors style-tag).
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Avatar ronding (altijd) ────────────────────────────── */
+.smsc_userinfo_photo img,
+[class*="avatar"] img,
+[class*="photo"] img {
+  border-radius: 50% !important;
+  transition: transform 0.2s ease;
+}
+.smsc_userinfo_photo img:hover,
+[class*="avatar"] img:hover {
+  transform: scale(1.08);
+}
