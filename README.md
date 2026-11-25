@@ -10,16 +10,13 @@ Een Chrome/Edge-browserextensie die je Smartschool-omgeving aanpast met coole fe
 
 | Feature | Beschrijving |
 |---|---|
-| 👤 **Naam veranderen** | Pas je weergavenaam aan op alle plekken in Smartschool |
-| 🖼️ **Profielfoto veranderen** | Upload een afbeelding of geef een URL op |
-| 🔢 **Berichtteller** | Zet de berichtteller op een getal naar keuze |
-| 📝 **Paginatitel** | Verander de browsertabblad-titel |
-| 🌙 **Donker thema** | Voeg een donker thema toe |
-| ⚡ **Neon thema** | Cyberspace-stijl met gloeiende kleuren |
-| 🌸 **Pastel thema** | Zachte, zachte pastelkleuren |
-| 💻 **Hacker thema** | Groene tekst op zwart, zoals in de films |
-| 🔧 **Eigen CSS** | Schrijf je eigen CSS voor volledige controle |
-| 🙈 **Elementen verbergen** | Verberg onderdelen via CSS-selectors |
+| **Naam veranderen** | Pas je weergavenaam aan op alle plekken in Smartschool |
+|  **Profielfoto veranderen** | Upload een afbeelding of geef een URL op |
+|  **Paginatitel** | Verander de browsertabblad-titel |
+|  **Eigen CSS** | Schrijf je eigen CSS voor volledige controle |
+|  **Elementen verbergen** | Verberg onderdelen via CSS-selectors |
+| **eigen favicon** | upload een eigen favicon voor de smartschool website of gebruik het smartschool Mod logo |
+| **eigen topbar kleur** | verander de kleur van je smartschool topbar naar de kleur die jij wilt |
 
 ---
 
@@ -49,7 +46,7 @@ Een Chrome/Edge-browserextensie die je Smartschool-omgeving aanpast met coole fe
 
 ---
 
-## 📁 Bestandsstructuur
+## Bestandsstructuur
 
 ```
 mod/
