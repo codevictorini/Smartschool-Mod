@@ -1,0 +1,358 @@
+/* Smartschool Mod – popup */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --accent:      #ff520e;
+  --accent-dark: #d94000;
+  --ink:         #243247;
+  --muted:       #6b7280;
+  --line:        #ded8cb;
+  --paper:       #f6f3eb;
+  --card:        #fffdf8;
+}
+
+body {
+  width: 320px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+}
+
+main {
+  padding: 16px;
+  border: 1px solid var(--line);
+  background: var(--card);
+}
+
+/* ── Header ── */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.header-left img { border-radius: 4px; }
+header strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 16px;
+  color: var(--ink);
+}
+
+/* Discord knop */
+.btn-discord {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #c9cfe8;
+  border-radius: 4px;
+  background: #fff;
+  color: #5865f2;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background .1s, border-color .1s;
+}
+.btn-discord:hover {
+  background: #f0f1fc;
+  border-color: #5865f2;
+}
+
+/* ── Tabs ── */
+.tabs {
+  display: flex;
+  margin: 10px 0 0;
+  border-bottom: 1px solid var(--line);
+}
+.tab {
+  flex: 1;
+  padding: 7px 4px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  transition: color .1s;
+}
+.tab:hover  { color: var(--accent); }
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ── Tab content ── */
+.tab-content {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 12px;
+}
+.tab-content.active { display: flex; }
+
+/* ── Labels ── */
+.eyebrow {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+.eyebrow:first-child { margin-top: 0; }
+
+.field-hint {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: -3px;
+}
+
+/* ── Inputs ── */
+input[type="text"],
+input[type="number"],
+textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  padding: 6px 8px;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+  color: var(--ink);
+  background: #fff;
+  outline: none;
+  border-radius: 0;
+  resize: vertical;
+}
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus { border-color: var(--accent); }
+
+/* ── Avatar ── */
+.avatar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.avatar-wrap {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background: #f0ece4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.avatar-wrap img { width: 100%; height: 100%; object-fit: cover; }
+.avatar-btns { display: flex; flex-direction: column; gap: 3px; }
+
+/* ── Favicon ── */
+.favicon-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.favicon-preview {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.favicon-preview img { width: 100%; height: 100%; object-fit: contain; }
+.favicon-btns { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+
+/* ── Punten ── */
+.grade-btns {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.grade-status {
+  font-size: 11px;
+  color: var(--muted);
+  min-height: 14px;
+}
+.grade-status.success { color: #1a7a45; }
+.grade-status.error   { color: #c0392b; }
+
+/* ── Kleuren ── */
+.color-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 4px;
+}
+input[type="color"] {
+  width: 32px;
+  height: 26px;
+  padding: 1px 2px;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  cursor: pointer;
+  background: #fff;
+  flex-shrink: 0;
+}
+input[type="color"]:focus { border-color: var(--accent); outline: none; }
+.color-hex {
+  font-size: 12px;
+  font-family: "Courier New", monospace;
+  color: var(--muted);
+  flex: 1;
+}
+
+/* ── Presets ── */
+.presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 8px;
+}
+.preset {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  transition: transform .1s;
+}
+.preset:hover { transform: scale(1.25); }
+.preset.active {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 2px var(--card), 0 0 0 4px var(--ink);
+}
+
+/* ── Hide list ── */
+#hideList { display: flex; flex-direction: column; gap: 3px; margin-bottom: 3px; }
+.hide-tag {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff8f5;
+  border: 1px solid #f5d5c8;
+  padding: 3px 7px;
+  font-size: 11px;
+  font-family: "Courier New", monospace;
+}
+.hide-tag button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #c0392b;
+  font-size: 12px;
+  padding: 0 2px;
+  line-height: 1;
+}
+.hide-add-row { display: flex; gap: 5px; }
+.hide-add-row input { flex: 1; }
+
+/* ── Danger zone ── */
+.danger-zone {
+  padding-top: 10px;
+  margin-top: 4px;
+  border-top: 1px dashed #e0b8a8;
+}
+
+/* ── Buttons ── */
+.btn-outline {
+  background: #fff;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 4px 10px;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 0;
+  white-space: nowrap;
+}
+.btn-outline:hover { background: #fff3ee; }
+
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 11px;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.btn-link:hover { color: var(--accent); }
+
+.btn-link-danger {
+  background: none;
+  border: none;
+  color: #c0392b;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 6px;
+  white-space: nowrap;
+}
+.btn-link-danger:hover { text-decoration: underline; }
+
+.btn-danger {
+  width: 100%;
+  background: #fff;
+  color: #c0392b;
+  border: 1px solid #c0392b;
+  padding: 7px;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 0;
+}
+.btn-danger:hover { background: #fdf0ef; }
+
+/* ── Apply bar ── */
+.apply-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.btn-apply {
+  width: 100%;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 9px;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 0;
+  transition: background .1s;
+}
+.btn-apply:hover { background: var(--accent-dark); }
+
+.status {
+  font-size: 11px;
+  text-align: center;
+  color: var(--muted);
+  min-height: 14px;
+}
+.status.success { color: #1a7a45; }
+.status.error   { color: #c0392b; }
