@@ -1,4 +1,4 @@
-# ⚡ Smartschool Mod
+# Smartschool Mod
 
 Een Chrome/Edge-browserextensie die je Smartschool-omgeving aanpast met coole features.
 
@@ -6,7 +6,7 @@ Een Chrome/Edge-browserextensie die je Smartschool-omgeving aanpast met coole fe
 
 ---
 
-## 🚀 Features
+## Features
 
 | Feature | Beschrijving |
 |---|---|
@@ -20,7 +20,7 @@ Een Chrome/Edge-browserextensie die je Smartschool-omgeving aanpast met coole fe
 
 ---
 
-## 📦 Installatie
+## Installatie
 
 ### Chrome / Edge (ongepakt)
 
@@ -38,10 +38,10 @@ Een Chrome/Edge-browserextensie die je Smartschool-omgeving aanpast met coole fe
 
 ---
 
-## 🛠️ Gebruik
+## Gebruik
 
 1. Ga naar een Smartschool-pagina (bijv. `jouwschool.smartschool.be`)
-2. Klik op het ⚡-icoontje in de extensiebalk
+2. Klik op het icoontje in de extensiebalk
 3. Pas je instellingen aan en klik **Toepassen**
 
 ---
