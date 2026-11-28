@@ -189,6 +189,67 @@ h2 {
 .feature-table td:nth-child(2) { width: 160px; white-space: nowrap; }
 .feature-table td:nth-child(3) { color: var(--muted); }
 
+/* ── EXTENSIES (NIEUW) ── */
+.ext-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.ext-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Specifieke accentkleuren voor de bovenrand */
+.ext-card.yalsify { border-top: 3px solid #9c27b0; }
+.ext-card.puntklik { border-top: 3px solid #00bcd4; }
+
+.ext-icon {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.ext-card h3 {
+  font-family: Georgia, serif;
+  font-size: 16px;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.ext-card p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+  flex-grow: 1;
+  margin-bottom: 15px;
+}
+
+.ext-btn {
+  display: inline-block;
+  padding: 7px 14px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  transition: background .1s;
+  align-self: flex-start;
+  border: none;
+  cursor: pointer;
+}
+
+/* Hover-effecten voor de specifieke knoppen */
+.ext-btn.yalsify { background: #9c27b0; }
+.ext-btn.yalsify:hover { background: #7b1fa2; }
+
+.ext-btn.puntklik { background: #00bcd4; }
+.ext-btn.puntklik:hover { background: #0097a7; }
+
 /* ── BROWSER TABS ── */
 .browser-tabs {
   display: flex;
