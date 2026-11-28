@@ -4,36 +4,41 @@
 const MOD_KEY = "smartschool_mod_settings";
 
 let state = {
-  displayName:  "",
-  avatarDataUrl: "",
-  customTitle:  "",
-  faviconDataUrl: "",
-  navColor:     "",
-  bgColor:      "",
-  customCSS:    "",
-  hideElements: [],
+  displayName:       "",
+  avatarDataUrl:     "",
+  customTitle:       "",
+  faviconDataUrl:    "",
+  navColor:          "",
+  bgColor:           "",
+  fontFamily:        "",
+  customCSS:         "",
+  hideElements:      [],
+  fakeMessages:      null,
+  fakeNotifications: null,
+  fakeNews:          null,
 };
 
 const byId = (id) => document.getElementById(id);
-
-const displayNameInput  = byId("displayName");
-const avatarImg         = byId("avatarImg");
-const avatarFile        = byId("avatarFile");
-const avatarUrlInput    = byId("avatarUrl");
-const titleInput        = byId("customTitle");
-const cssInput          = byId("customCSS");
-const hideListEl        = byId("hideList");
-const hideSelectorInput = byId("hideSelector");
-const statusEl          = byId("status");
-const navColorInput     = byId("navColor");
-const navColorHex       = byId("navColorHex");
-const bgColorInput      = byId("bgColor");
-const bgColorHex        = byId("bgColorHex");
 
 // ─── Discord ──────────────────────────────────────────────────────────────────
 
 byId("btnDiscord").addEventListener("click", () => {
   chrome.tabs.create({ url: "https://discord.gg/FWTsX9wSXx" });
+});
+
+byId("btnGithub").addEventListener("click", () => {
+  chrome.tabs.create({ url: "https://github.com/codevictorini/Smartschool-Mod" });
+});
+
+byId("btnUpdates").addEventListener("click", () => {
+  window.location.href = "updates.html";
+});
+
+// ─── Review ───────────────────────────────────────────────────────────────────
+
+byId("btnReview").addEventListener("click", (e) => {
+  e.preventDefault();
+  chrome.tabs.create({ url: "https://chromewebstore.google.com/detail/smartschool-mod/ljckdkmlkanjmldpecjahangpfnpaldh/reviews" });
 });
 
 // ─── Tabs ─────────────────────────────────────────────────────────────────────
@@ -55,43 +60,43 @@ function validHex(c) {
 
 // ─── Kleurpickers ─────────────────────────────────────────────────────────────
 
-navColorInput.addEventListener("input", () => {
-  state.navColor = navColorInput.value;
-  navColorHex.textContent = navColorInput.value;
+byId("navColor").addEventListener("input", () => {
+  state.navColor = byId("navColor").value;
+  byId("navColorHex").textContent = byId("navColor").value;
   syncPresets("navPresets", state.navColor);
 });
-bgColorInput.addEventListener("input", () => {
-  state.bgColor = bgColorInput.value;
-  bgColorHex.textContent = bgColorInput.value;
+byId("bgColor").addEventListener("input", () => {
+  state.bgColor = byId("bgColor").value;
+  byId("bgColorHex").textContent = byId("bgColor").value;
   syncPresets("bgPresets", state.bgColor);
 });
 
 byId("btnResetNav").addEventListener("click", () => {
   state.navColor = "";
-  navColorInput.value = "#ff520e";
-  navColorHex.textContent = "—";
+  byId("navColor").value = "#ff520e";
+  byId("navColorHex").textContent = "—";
   syncPresets("navPresets", "");
 });
 byId("btnResetBg").addEventListener("click", () => {
   state.bgColor = "";
-  bgColorInput.value = "#f6f7f8";
-  bgColorHex.textContent = "—";
+  byId("bgColor").value = "#f6f7f8";
+  byId("bgColorHex").textContent = "—";
   syncPresets("bgPresets", "");
 });
 
 byId("navPresets").querySelectorAll(".preset").forEach((btn) => {
   btn.addEventListener("click", () => {
     state.navColor = btn.dataset.color;
-    navColorInput.value = btn.dataset.color;
-    navColorHex.textContent = btn.dataset.color;
+    byId("navColor").value = btn.dataset.color;
+    byId("navColorHex").textContent = btn.dataset.color;
     syncPresets("navPresets", state.navColor);
   });
 });
 byId("bgPresets").querySelectorAll(".preset").forEach((btn) => {
   btn.addEventListener("click", () => {
     state.bgColor = btn.dataset.color;
-    bgColorInput.value = btn.dataset.color;
-    bgColorHex.textContent = btn.dataset.color;
+    byId("bgColor").value = btn.dataset.color;
+    byId("bgColorHex").textContent = btn.dataset.color;
     syncPresets("bgPresets", state.bgColor);
   });
 });
@@ -105,45 +110,43 @@ function syncPresets(id, color) {
 // ─── Avatar ───────────────────────────────────────────────────────────────────
 
 byId("btnUploadAvatar").addEventListener("click", () => {
-  avatarUrlInput.style.display = "none";
-  avatarFile.click();
+  byId("avatarUrl").style.display = "none";
+  byId("avatarFile").click();
 });
-avatarFile.addEventListener("change", () => {
-  const file = avatarFile.files[0];
+byId("avatarFile").addEventListener("change", () => {
+  const file = byId("avatarFile").files[0];
   if (!file) return;
   const reader = new FileReader();
   reader.onload = (e) => { state.avatarDataUrl = e.target.result; setAvatarPreview(e.target.result); };
   reader.readAsDataURL(file);
 });
 byId("btnUrlAvatar").addEventListener("click", () => {
-  avatarUrlInput.style.display = avatarUrlInput.style.display === "none" ? "block" : "none";
+  const u = byId("avatarUrl");
+  u.style.display = u.style.display === "none" ? "block" : "none";
 });
-avatarUrlInput.addEventListener("input", syncAvatarUrl);
-avatarUrlInput.addEventListener("change", syncAvatarUrl);
+byId("avatarUrl").addEventListener("input",  syncAvatarUrl);
+byId("avatarUrl").addEventListener("change", syncAvatarUrl);
 function syncAvatarUrl() {
-  const url = avatarUrlInput.value.trim();
+  const url = byId("avatarUrl").value.trim();
   if (url) { state.avatarDataUrl = url; setAvatarPreview(url); }
 }
 byId("btnClearAvatar").addEventListener("click", () => {
   state.avatarDataUrl = "";
-  avatarImg.src = "";
-  avatarImg.style.display = "none";
+  byId("avatarImg").src = "";
+  byId("avatarImg").style.display = "none";
   byId("avatarPlaceholder").style.display = "";
-  avatarUrlInput.value = "";
-  avatarUrlInput.style.display = "none";
-  avatarFile.value = "";
+  byId("avatarUrl").value = "";
+  byId("avatarUrl").style.display = "none";
+  byId("avatarFile").value = "";
 });
 function setAvatarPreview(src) {
-  avatarImg.src = src;
-  avatarImg.style.display = "block";
+  byId("avatarImg").src = src;
+  byId("avatarImg").style.display = "block";
   byId("avatarPlaceholder").style.display = "none";
 }
 
 // ─── Favicon ──────────────────────────────────────────────────────────────────
 
-const faviconFile = byId("faviconFile");
-
-// Mod-logo knop: gebruik icon48.png als data-URL
 byId("btnFaviconMod").addEventListener("click", () => {
   fetch(chrome.runtime.getURL("icons/icon48.png"))
     .then((r) => r.blob())
@@ -157,10 +160,9 @@ byId("btnFaviconMod").addEventListener("click", () => {
     });
 });
 
-// Eigen upload
-byId("btnFaviconUpload").addEventListener("click", () => faviconFile.click());
-faviconFile.addEventListener("change", () => {
-  const file = faviconFile.files[0];
+byId("btnFaviconUpload").addEventListener("click", () => byId("faviconFile").click());
+byId("faviconFile").addEventListener("change", () => {
+  const file = byId("faviconFile").files[0];
   if (!file) return;
   const reader = new FileReader();
   reader.onload = (e) => {
@@ -170,38 +172,77 @@ faviconFile.addEventListener("change", () => {
   reader.readAsDataURL(file);
 });
 
-// Reset
 byId("btnFaviconReset").addEventListener("click", () => {
   state.faviconDataUrl = "";
   byId("faviconImg").style.display = "none";
   byId("faviconPlaceholder").style.display = "";
-  faviconFile.value = "";
+  byId("faviconFile").value = "";
 });
 
 function setFaviconPreview(src) {
-  const img = byId("faviconImg");
-  img.src = src;
-  img.style.display = "block";
+  byId("faviconImg").src = src;
+  byId("faviconImg").style.display = "block";
   byId("faviconPlaceholder").style.display = "none";
 }
 
 // ─── Elementen verbergen ──────────────────────────────────────────────────────
 
 byId("btnAddHide").addEventListener("click", addHideSelector);
-hideSelectorInput.addEventListener("keydown", (e) => { if (e.key === "Enter") addHideSelector(); });
+byId("hideSelector").addEventListener("keydown", (e) => { if (e.key === "Enter") addHideSelector(); });
 
 function addHideSelector() {
-  const sel = hideSelectorInput.value.trim();
+  const sel = byId("hideSelector").value.trim();
   if (!sel || state.hideElements.includes(sel)) return;
   try { document.querySelector(sel); } catch {
     showStatus("Ongeldige CSS-selector.", "error"); return;
   }
   state.hideElements.push(sel);
-  hideSelectorInput.value = "";
+  byId("hideSelector").value = "";
   renderHideList();
 }
 
+// ─── Element pikken ───────────────────────────────────────────────────────────
+
+let _pickPollTimer = null;
+
+byId("btnPickElement").addEventListener("click", () => {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    if (!tabs[0]?.url?.includes("smartschool.be")) {
+      showStatus("Open eerst een Smartschool-pagina.", "error"); return;
+    }
+    // Wis eventuele vorige pick
+    chrome.storage.local.remove("smod_picked_selector");
+    // Zeg aan de content script dat pik-modus start
+    chrome.tabs.sendMessage(tabs[0].id, { action: "startPick" }, (resp) => {
+      if (chrome.runtime.lastError || !resp?.ok) {
+        showStatus("Herlaad de Smartschool-pagina.", "error"); return;
+      }
+      byId("btnPickElement").textContent = "⏳ Klik op een element...";
+      byId("btnPickElement").classList.add("actief");
+      // Poll storage tot de content script een selector terugschrijft
+      _pickPollTimer = setInterval(() => {
+        chrome.storage.local.get("smod_picked_selector", (data) => {
+          if (!data.smod_picked_selector) return;
+          const sel = data.smod_picked_selector;
+          chrome.storage.local.remove("smod_picked_selector");
+          clearInterval(_pickPollTimer);
+          byId("btnPickElement").textContent = "🎯 Klik op een element";
+          byId("btnPickElement").classList.remove("actief");
+          if (!state.hideElements.includes(sel)) {
+            state.hideElements.push(sel);
+            renderHideList();
+            showStatus("Element toegevoegd.", "success");
+          } else {
+            showStatus("Al in de lijst.", "");
+          }
+        });
+      }, 300);
+    });
+  });
+});
+
 function renderHideList() {
+  const hideListEl = byId("hideList");
   hideListEl.innerHTML = "";
   state.hideElements.forEach((sel, i) => {
     const tag = document.createElement("div");
@@ -221,11 +262,21 @@ function renderHideList() {
 // ─── Toepassen ────────────────────────────────────────────────────────────────
 
 byId("btnApply").addEventListener("click", () => {
-  state.displayName    = displayNameInput.value.trim();
-  state.customTitle    = titleInput.value.trim();
-  state.customCSS      = cssInput.value;
-  state.navColor       = validHex(navColorInput.value) ? navColorInput.value : "";
-  state.bgColor        = validHex(bgColorInput.value)  ? bgColorInput.value  : "";
+  state.displayName = byId("displayName").value.trim();
+  state.customTitle = byId("customTitle").value.trim();
+  state.customCSS   = byId("customCSS").value;
+  state.navColor    = validHex(byId("navColor").value) ? byId("navColor").value : "";
+  state.bgColor     = validHex(byId("bgColor").value)  ? byId("bgColor").value  : "";
+  state.fontFamily  = byId("fontFamily").value;
+
+  const parseCounter = (id) => {
+    const v = byId(id).value.trim();
+    if (v === "") return null;
+    const n = parseInt(v, 10);
+    return (!isNaN(n) && n >= 0 && n <= 9999) ? n : null;
+  };
+  state.fakeMessages      = parseCounter("fakeMessages");
+  state.fakeNotifications = parseCounter("fakeNotifications");
 
   const toSave = JSON.parse(JSON.stringify(state));
   chrome.storage.local.set({ [MOD_KEY]: toSave }, () => {
@@ -243,15 +294,20 @@ function sendToPage(settings) {
     const tabId = tabs[0].id;
     chrome.tabs.sendMessage(tabId, { action: "applySettings", settings }, (response) => {
       if (chrome.runtime.lastError) {
-        chrome.scripting.executeScript({ target: { tabId }, files: ["content/content.js"] }, () => {
-          chrome.scripting.insertCSS({ target: { tabId }, files: ["content/content.css"] });
-          setTimeout(() => {
-            chrome.tabs.sendMessage(tabId, { action: "applySettings", settings }, (r) => {
-              if (chrome.runtime.lastError || !r?.ok) showStatus("Herlaad de pagina.", "error");
-              else showStatus("Toegepast!", "success");
-            });
-          }, 300);
-        });
+        if (chrome.scripting) {
+          chrome.scripting.executeScript({ target: { tabId }, files: ["content/content.js"] }, () => {
+            if (chrome.runtime.lastError) { showStatus("Herlaad de pagina.", "error"); return; }
+            chrome.scripting.insertCSS({ target: { tabId }, files: ["content/content.css"] });
+            setTimeout(() => {
+              chrome.tabs.sendMessage(tabId, { action: "applySettings", settings }, (r) => {
+                if (chrome.runtime.lastError || !r?.ok) showStatus("Herlaad de pagina.", "error");
+                else showStatus("Toegepast!", "success");
+              });
+            }, 300);
+          });
+        } else {
+          showStatus("Herlaad de Smartschool-pagina.", "error");
+        }
         return;
       }
       if (response?.ok) showStatus("Toegepast!", "success");
@@ -265,8 +321,11 @@ function sendToPage(settings) {
 byId("btnReset").addEventListener("click", () => {
   if (!confirm("Alle instellingen wissen?")) return;
   chrome.storage.local.remove([MOD_KEY], () => {
-    state = { displayName: "", avatarDataUrl: "", customTitle: "", faviconDataUrl: "",
-              navColor: "", bgColor: "", customCSS: "", hideElements: [] };
+    state = {
+      displayName: "", avatarDataUrl: "", customTitle: "", faviconDataUrl: "",
+      navColor: "", bgColor: "", fontFamily: "", customCSS: "", hideElements: [],
+      fakeMessages: null, fakeNotifications: null, fakeNews: null,
+    };
     loadUI();
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (tabs[0]) {
@@ -280,28 +339,33 @@ byId("btnReset").addEventListener("click", () => {
 // ─── UI laden ─────────────────────────────────────────────────────────────────
 
 function loadUI() {
-  displayNameInput.value = state.displayName || "";
-  titleInput.value       = state.customTitle || "";
-  cssInput.value         = state.customCSS   || "";
+  byId("displayName").value = state.displayName || "";
+  byId("customTitle").value = state.customTitle || "";
+  byId("customCSS").value   = state.customCSS   || "";
 
   if (validHex(state.navColor)) {
-    navColorInput.value = state.navColor; navColorHex.textContent = state.navColor;
+    byId("navColor").value = state.navColor;
+    byId("navColorHex").textContent = state.navColor;
   } else {
-    navColorInput.value = "#ff520e"; navColorHex.textContent = "—";
+    byId("navColor").value = "#ff520e";
+    byId("navColorHex").textContent = "—";
   }
   if (validHex(state.bgColor)) {
-    bgColorInput.value = state.bgColor; bgColorHex.textContent = state.bgColor;
+    byId("bgColor").value = state.bgColor;
+    byId("bgColorHex").textContent = state.bgColor;
   } else {
-    bgColorInput.value = "#f6f7f8"; bgColorHex.textContent = "—";
+    byId("bgColor").value = "#f6f7f8";
+    byId("bgColorHex").textContent = "—";
   }
   syncPresets("navPresets", state.navColor);
   syncPresets("bgPresets",  state.bgColor);
+  byId("fontFamily").value = state.fontFamily || "";
 
   if (state.avatarDataUrl) {
     setAvatarPreview(state.avatarDataUrl);
-    if (state.avatarDataUrl.startsWith("http")) avatarUrlInput.value = state.avatarDataUrl;
+    if (state.avatarDataUrl.startsWith("http")) byId("avatarUrl").value = state.avatarDataUrl;
   } else {
-    avatarImg.style.display = "none";
+    byId("avatarImg").style.display = "none";
     byId("avatarPlaceholder").style.display = "";
   }
 
@@ -313,6 +377,9 @@ function loadUI() {
   }
 
   renderHideList();
+
+  byId("fakeMessages").value      = state.fakeMessages      != null ? state.fakeMessages      : "";
+  byId("fakeNotifications").value = state.fakeNotifications != null ? state.fakeNotifications : "";
 }
 
 chrome.storage.local.get(MOD_KEY, (data) => {
@@ -323,8 +390,11 @@ chrome.storage.local.get(MOD_KEY, (data) => {
 // ─── Status ───────────────────────────────────────────────────────────────────
 
 function showStatus(msg, type = "") {
-  statusEl.textContent = msg;
-  statusEl.className   = "status " + type;
+  byId("status").textContent = msg;
+  byId("status").className   = "status " + type;
   clearTimeout(showStatus._t);
-  showStatus._t = setTimeout(() => { statusEl.textContent = ""; statusEl.className = "status"; }, 2800);
+  showStatus._t = setTimeout(() => {
+    byId("status").textContent = "";
+    byId("status").className   = "status";
+  }, 2800);
 }
